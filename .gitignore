@@ -1,0 +1,3 @@
+echo "*/bin/
+*/obj/
+*.user-secrets" > .gitignore

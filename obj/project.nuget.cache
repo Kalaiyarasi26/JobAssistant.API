@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "dgSpecHash": "shAjpRUASCA=",
+  "success": true,
+  "projectFilePath": "/Users/kalai/job-assistant/JobAssistant.API/JobAssistant.API.csproj",
+  "expectedPackageFiles": [
+    "/Users/kalai/.nuget/packages/anthropic/12.23.0/anthropic.12.23.0.nupkg.sha512",
+    "/Users/kalai/.nuget/packages/microsoft.aspnetcore.openapi/10.0.2/microsoft.aspnetcore.openapi.10.0.2.nupkg.sha512",
+    "/Users/kalai/.nuget/packages/microsoft.extensions.ai.abstractions/10.5.1/microsoft.extensions.ai.abstractions.10.5.1.nupkg.sha512",
+    "/Users/kalai/.nuget/packages/microsoft.openapi/2.0.0/microsoft.openapi.2.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}
