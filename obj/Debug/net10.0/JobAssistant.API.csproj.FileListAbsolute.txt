@@ -33,3 +33,9 @@
 /Users/kalai/job-assistant/JobAssistant.API/obj/Debug/net10.0/JobAssistant.API.pdb
 /Users/kalai/job-assistant/JobAssistant.API/obj/Debug/net10.0/JobAssistant.API.genruntimeconfig.cache
 /Users/kalai/job-assistant/JobAssistant.API/obj/Debug/net10.0/ref/JobAssistant.API.dll
+/Users/kalai/job-assistant/JobAssistant.API/obj/Debug/net10.0/JobAssistant.API.sourcelink.json
+/Users/kalai/job-assistant/JobAssistant.API/bin/Debug/net10.0/Swashbuckle.AspNetCore.Swagger.dll
+/Users/kalai/job-assistant/JobAssistant.API/bin/Debug/net10.0/Swashbuckle.AspNetCore.SwaggerGen.dll
+/Users/kalai/job-assistant/JobAssistant.API/bin/Debug/net10.0/Swashbuckle.AspNetCore.SwaggerUI.dll
+/Users/kalai/job-assistant/JobAssistant.API/bin/Debug/net10.0/Microsoft.Extensions.AI.dll
+/Users/kalai/job-assistant/JobAssistant.API/bin/Debug/net10.0/System.Numerics.Tensors.dll

@@ -1,5 +1,6 @@
 using Anthropic;
-using Anthropic.Models.Messages;
+using JobAssistant.API.Services;
+using Microsoft.Extensions.AI;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,22 +9,27 @@ var apiKey = builder.Configuration["ANTHROPIC_API_KEY"];
 var anthropicClient = new AnthropicClient() { ApiKey = apiKey };
 
 builder.Services.AddSingleton(anthropicClient);
+builder.Services.AddSingleton<IChatClient>(sp => sp.GetRequiredService<AnthropicClient>().AsIChatClient("claude-sonnet-4-6", 1024));
+builder.Services.AddSingleton<IClaudeService, ClaudeService>();
 builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-app.MapGet("/test", async (AnthropicClient client) =>
-{
-    var message = await client.Messages.Create(new MessageCreateParams()
-    {
-        Model = "claude-sonnet-4-6",
-        MaxTokens = 1024,
-        Messages = [
-            new() { Role = Role.User, Content = "Say hello from Job Assistant!" }
-        ]
-    });
+app.UseSwagger();
+app.UseSwaggerUI();
 
-    return message.ToString();
+app.MapControllers();
+
+app.MapGet("/test", async (IChatClient client, CancellationToken cancellationToken) =>
+{
+    var response = await client.GetResponseAsync(
+        new[] { new ChatMessage(ChatRole.User, "Say hello from Job Assistant!") },
+        new ChatOptions { MaxOutputTokens = 1024 },
+        cancellationToken);
+
+    return response.Text;
 });
 
 app.Run();
