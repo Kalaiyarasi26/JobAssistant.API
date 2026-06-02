@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "FZjar8Sp7HY=",
+  "dgSpecHash": "WCideOVHbzU=",
   "success": true,
   "projectFilePath": "/Users/kalai/job-assistant/JobAssistant.API/JobAssistant.API.csproj",
   "expectedPackageFiles": [
@@ -10,6 +10,7 @@
     "/Users/kalai/.nuget/packages/microsoft.extensions.ai.abstractions/10.5.1/microsoft.extensions.ai.abstractions.10.5.1.nupkg.sha512",
     "/Users/kalai/.nuget/packages/microsoft.extensions.apidescription.server/10.0.0/microsoft.extensions.apidescription.server.10.0.0.nupkg.sha512",
     "/Users/kalai/.nuget/packages/microsoft.openapi/2.4.1/microsoft.openapi.2.4.1.nupkg.sha512",
+    "/Users/kalai/.nuget/packages/pdfpig/0.1.14/pdfpig.0.1.14.nupkg.sha512",
     "/Users/kalai/.nuget/packages/swashbuckle.aspnetcore/10.1.7/swashbuckle.aspnetcore.10.1.7.nupkg.sha512",
     "/Users/kalai/.nuget/packages/swashbuckle.aspnetcore.swagger/10.1.7/swashbuckle.aspnetcore.swagger.10.1.7.nupkg.sha512",
     "/Users/kalai/.nuget/packages/swashbuckle.aspnetcore.swaggergen/10.1.7/swashbuckle.aspnetcore.swaggergen.10.1.7.nupkg.sha512",

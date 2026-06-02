@@ -11,6 +11,7 @@ var anthropicClient = new AnthropicClient() { ApiKey = apiKey };
 builder.Services.AddSingleton(anthropicClient);
 builder.Services.AddSingleton<IChatClient>(sp => sp.GetRequiredService<AnthropicClient>().AsIChatClient("claude-sonnet-4-6", 1024));
 builder.Services.AddSingleton<IClaudeService, ClaudeService>();
+builder.Services.AddScoped<IPdfService, PdfService>();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
