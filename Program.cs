@@ -4,14 +4,26 @@ using Microsoft.Extensions.AI;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var apiKey = builder.Configuration["ANTHROPIC_API_KEY"];
 
-var anthropicClient = new AnthropicClient() { ApiKey = apiKey };
 
 const string ReactCorsPolicy = "ReactAppPolicy";
 
-builder.Services.AddSingleton(anthropicClient);
-builder.Services.AddSingleton<IChatClient>(sp => sp.GetRequiredService<AnthropicClient>().AsIChatClient("claude-sonnet-4-6", 1024));
+builder.Services.AddSingleton<IChatClient>(sp =>
+{
+    var config = sp.GetRequiredService<IConfiguration>();
+
+    var apiKey = config["ANTHROPIC_API_KEY"];
+
+    if (string.IsNullOrEmpty(apiKey))
+        throw new Exception("ANTHROPIC_API_KEY is missing in environment variables");
+
+    var client = new AnthropicClient
+    {
+        ApiKey = apiKey
+    };
+
+    return client.AsIChatClient("claude-sonnet-4-6", 1024);
+});
 builder.Services.AddSingleton<IClaudeService, ClaudeService>();
 builder.Services.AddScoped<IPdfService, PdfService>();
 builder.Services.AddControllers();

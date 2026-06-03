@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("JobAssistant.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+65f76a694ef24ef5c39322c593ce64be38fc4fdb")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b0daf6274e53eca0d42907f82aea454da787468d")]
 [assembly: System.Reflection.AssemblyProductAttribute("JobAssistant.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("JobAssistant.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
