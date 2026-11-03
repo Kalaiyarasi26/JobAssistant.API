@@ -5,11 +5,8 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>80089209-884c-4125-8f94-3e1206b69c4b</UserSecretsId>
+    <DefaultItemExcludes>$(DefaultItemExcludes);tests/**</DefaultItemExcludes>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Compile Remove="tests/**" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Anthropic" Version="12.23.0" />
