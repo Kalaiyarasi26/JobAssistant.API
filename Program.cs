@@ -1,6 +1,7 @@
 using Anthropic;
 using JobAssistant.API.Services;
 using Microsoft.Extensions.AI;
+using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -42,8 +43,10 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddOpenTelemetry()
+    .ConfigureResource(resource => resource.AddService("JobAssistant.API"))
     .WithTracing(tracing => tracing
         .AddAspNetCoreInstrumentation()
+        .AddSource(PdfService.ActivitySourceName, ClaudeService.ActivitySourceName)
         .AddConsoleExporter());
 
 var app = builder.Build();

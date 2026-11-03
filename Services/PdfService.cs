@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Microsoft.AspNetCore.Http;
 using UglyToad.PdfPig;
 
@@ -10,8 +11,14 @@ public interface IPdfService
 
 public class PdfService : IPdfService
 {
+    public const string ActivitySourceName = "JobAssistant.API.PdfService";
+
+    private static readonly ActivitySource ActivitySource = new(ActivitySourceName);
+
     public async Task<string> ExtractTextAsync(IFormFile file, CancellationToken cancellationToken = default)
     {
+        using var activity = ActivitySource.StartActivity("PDF text extraction");
+
         if (file is null)
         {
             throw new ArgumentNullException(nameof(file));

@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Microsoft.Extensions.AI;
 namespace JobAssistant.API.Services;
 
@@ -8,6 +9,10 @@ public interface IClaudeService
 
 public class ClaudeService : IClaudeService
 {
+    public const string ActivitySourceName = "JobAssistant.API.ClaudeService";
+
+    private static readonly ActivitySource ActivitySource = new(ActivitySourceName);
+
     private readonly IChatClient _chatClient;
     private const string ModelName = "claude-sonnet-4-6";
 
@@ -18,6 +23,8 @@ public class ClaudeService : IClaudeService
 
     public async Task<string> AnalyzeCareerAsync(string resumeText, string jobDescription, CancellationToken cancellationToken = default)
     {
+        using var activity = ActivitySource.StartActivity("Claude career analysis");
+
         var prompt = $"You are a career coach. Review the resume and job description below. Provide concise, actionable advice for aligning the resume to the role, highlighting strengths, identifying gaps, and suggesting improvements.\n\nResume:\n{resumeText}\n\nJob Description:\n{jobDescription}\n\nAnswer in a clear, professional way.";
 
         var messages = new[]
