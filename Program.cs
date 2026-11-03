@@ -59,3 +59,6 @@ app.MapGet("/test", async (IChatClient client, CancellationToken cancellationTok
 });
 
 app.Run();
+
+// Exposes the entry point to the integration tests (WebApplicationFactory<Program>).
+public partial class Program { }
