@@ -37,7 +37,7 @@ public class AnalyzeController : ControllerBase
 
     [HttpPost("upload")]
     [Consumes("multipart/form-data")]
-    public async Task<IActionResult> Upload([FromForm] IFormFile resumePdf, [FromForm] string jobDescription, CancellationToken cancellationToken)
+    public async Task<IActionResult> Upload(IFormFile resumePdf, [FromForm] string jobDescription, CancellationToken cancellationToken)
     {
         if (resumePdf is null || resumePdf.Length == 0)
         {
