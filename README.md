@@ -1,135 +1,26 @@
-# Job Application Assistant - Backend API
+# Job Application Assistant API
 
-This is the backend API for the Job Application Assistant, a career coaching platform powered by Claude AI.
-
-## Tech Stack
-
-- **Runtime**: C# .NET 10
-- **Framework**: ASP.NET Core
-- **AI**: Official Anthropic SDK with IChatClient from Microsoft.Extensions.AI
-- **PDF Processing**: PdfPig
-- **API Documentation**: Swagger/OpenAPI
-
-## Features
-
-- Career gap analysis powered by Claude AI
-- PDF resume extraction and processing
-- Tailored resume bullet point suggestions
-- Interview question generation
-- RESTful API endpoints
-
-## Endpoints
-
-### 1. POST /api/analyze
-
-Analyzes a resume against a job description using JSON input.
-
-**Request Body:**
-```json
-{
-  "resumeText": "string",
-  "jobDescription": "string"
-}
-```
-
-**Response:**
-```json
-{
-  "advice": "string (markdown formatted)"
-}
-```
-
-**Returns:** Gap analysis, strengths, tailored resume bullets, and interview preparation tips.
-
-### 2. POST /api/analyze/upload
-
-Analyzes a resume against a job description using a PDF file upload.
-
-**Request:**
-- Content-Type: `multipart/form-data`
-- Fields:
-  - `resumePdf`: PDF file (required)
-  - `jobDescription`: text (required)
-
-**Response:**
-```json
-{
-  "advice": "string (markdown formatted)"
-}
-```
-
-**Returns:** Gap analysis, strengths, tailored resume bullets, and interview preparation tips.
-
-## Setup Instructions
-
-### Prerequisites
-
-- .NET 10 SDK installed
-- Git installed
-- Anthropic API key (get one at [console.anthropic.com](https://console.anthropic.com))
-
-### Installation
-
-1. **Clone the repository:**
-   ```bash
-   git clone <repo-url>
-   cd job-assistant/JobAssistant.API
-   ```
-
-2. **Set the Anthropic API key:**
-   ```bash
-   dotnet user-secrets set ANTHROPIC_API_KEY your-key-here
-   ```
-
-3. **Run the API:**
-   ```bash
-   dotnet run
-   ```
-
-The API will start at `http://localhost:5149` and automatically open Swagger UI for testing.
-
-## CORS Configuration
-
-The API is configured to accept requests from:
-- `http://localhost:3000`
-- `https://localhost:3000`
-
-This allows seamless integration with React apps running on the default localhost:3000 port.
-
-## API Documentation
-
-Once the API is running, visit:
-- Swagger UI: `http://localhost:5149/swagger`
-- OpenAPI spec: `http://localhost:5149/swagger/v1/swagger.json`
-
-Use Swagger UI to test endpoints directly in the browser.
-
-## Development
-
-### Building
-
-```bash
-dotnet build
-```
-
-### Testing
-
-```bash
-dotnet run
-```
-
-Then use Swagger UI or tools like Postman/cURL to test the endpoints.
+Backend service that compares resume content with a job description and returns AI-generated career guidance. The application is built with ASP.NET Core on .NET 10.
 
 ## Architecture
 
-- **ClaudeService**: Handles AI analysis via Claude with IChatClient abstraction
-- **PdfService**: Extracts text from uploaded PDF files
-- **AnalyzeController**: HTTP endpoints for analysis requests
-- **Program.cs**: Dependency injection setup, CORS configuration, middleware pipeline
+The API keeps transport, document processing, and AI orchestration in separate layers:
 
-## Notes
+- **AnalyzeController** handles HTTP input validation and coordinates the analysis workflow.
+- **PdfService** extracts text from uploaded PDFs using PdfPig. The controller passes that text into the same analysis path used for text-based resumes.
+- **ClaudeService** builds the analysis prompt and calls `IChatClient` from `Microsoft.Extensions.AI`.
+- **Program.cs** is the composition root: it configures dependency injection and adapts the Anthropic SDK to `IChatClient`.
+- **Models** define the request and response contracts.
 
-- The service uses IChatClient abstraction, making it possible to swap AI providers in the future
-- All responses include markdown-formatted advice suitable for rich text display
-- PDF extraction preserves page breaks for better text organization
-- Maximum output tokens per request: 1024
+The `IClaudeService` and `IPdfService` interfaces isolate controller behavior from provider and parsing implementations. This keeps those boundaries independently testable and leaves the AI provider adapter replaceable without coupling the controller to the Anthropic SDK. Cancellation tokens flow from the HTTP request through the service calls.
+
+## Verification
+
+The test project covers service behavior, controller validation, PDF extraction, and HTTP integration through `WebApplicationFactory<Program>`. Integration tests replace `IChatClient` with a deterministic fake, so they exercise the ASP.NET Core pipeline without credentials or external provider calls. Test sources are excluded from the API project's build and publish inputs.
+
+## Work Completed
+
+- Established controller, PDF-processing, and AI-service boundaries using dependency injection and interfaces.
+- Added unit and in-memory integration coverage for the analysis workflows.
+- Isolated integration tests from the external AI provider with a fake chat client.
+- Separated test artifacts from API build/publish inputs and updated the Swagger dependency to address a reported package advisory.
